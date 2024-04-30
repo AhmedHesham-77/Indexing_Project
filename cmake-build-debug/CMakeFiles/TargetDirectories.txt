@@ -1,0 +1,3 @@
+D:/University/File Structure/2024/SL/Indexing/cmake-build-debug/CMakeFiles/Indexing.dir
+D:/University/File Structure/2024/SL/Indexing/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/University/File Structure/2024/SL/Indexing/cmake-build-debug/CMakeFiles/rebuild_cache.dir
