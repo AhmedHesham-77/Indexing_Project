@@ -109,10 +109,27 @@ int get_first_fit(int new_sz) {
     return (replace) ? offset : offset + sz;
 }
 
+void insert_first_fit(vector<int> &vec) {
+    int offset = get_first_fit(vec.size());
+    fstream data_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\data.dat",
+                      ios::in | ios::out | ios::binary};
+
+    data_file.seekp(offset * sizeof(int));
+    for (auto i: vec) {
+        int val = i;
+        data_file.write(reinterpret_cast<const char *>(&val), sizeof(int));
+    }
+    data_file.close();
+}
+
 
 int main() {
 //    write_file();
-//    read_data();
+    read_data();
 //    row_delete(3);
 //    cout <<    get_first_fit(1);
+    cout << "----------------------------------\n";
+    vector<int> vec = {16}, vec2 = {17, 18, 19, 20, 21};
+    insert_first_fit(vec2);
+    read_data();
 }
