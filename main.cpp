@@ -106,7 +106,22 @@ int get_first_fit(int new_sz) {
             break;
         }
     }
-    return (replace) ? offset : offset + sz;
+    deleted = 0;
+    if (replace) {
+        index_file.close();
+        return offset;
+    } else {
+//        index_file.seekp(ios::end);
+        index_file.close();
+        int x = offset + sz;
+        fstream index_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\index.dat",
+                           ios::in | ios::out | ios::binary | ios::app};
+        index_file.write(reinterpret_cast<const char *>(&x), sizeof(int));
+        index_file.write(reinterpret_cast<const char *>(&new_sz), sizeof(int));
+        index_file.write(reinterpret_cast<const char *>(&deleted), sizeof(int));
+        index_file.close();
+        return x;
+    }
 }
 
 void insert_first_fit(vector<int> &vec) {
@@ -125,11 +140,26 @@ void insert_first_fit(vector<int> &vec) {
 
 int main() {
 //    write_file();
-    read_data();
+//    read_data();
 //    row_delete(3);
 //    cout <<    get_first_fit(1);
-    cout << "----------------------------------\n";
-    vector<int> vec = {16}, vec2 = {17, 18, 19, 20, 21};
-    insert_first_fit(vec2);
-    read_data();
+//    cout << "----------------------------------\n";
+//    vector<int> vec = {16}, vec2 = {17, 18, 19, 20, 21};
+//    insert_first_fit(vec2);
+//    read_data();
+
+
+//    fstream index_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\index.dat",
+//                       ios::in | ios::out | ios::binary};
+//
+//    while (!index_file.eof()) {
+//        int of, sz, del;
+//        index_file.read(reinterpret_cast<char *>(&of), sizeof(int));
+//        index_file.read(reinterpret_cast<char *>(&sz), sizeof(int));
+//        index_file.read(reinterpret_cast<char *>(&del), sizeof(int));
+//        cout << of << ' ' << sz << ' ' << del << '\n';
+//    }
+//
+//    index_file.close();
+
 }
