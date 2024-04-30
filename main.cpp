@@ -76,7 +76,19 @@ void read_data() {
     index_file.close(), data_file.close();
 }
 
+void row_delete(int idx) {
+    int deleted = 1;
+
+    fstream index_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\index.dat",
+                       ios::in | ios::out | ios::binary};
+
+    index_file.seekp((idx - 1) * (3 * sizeof(int)) + (2 * sizeof(int)));
+    index_file.write(reinterpret_cast<const char *>(&deleted), sizeof(int));
+    index_file.close();
+}
+
 int main() {
 //    write_file();
 //    read_data();
+//    row_delete(3);
 }
