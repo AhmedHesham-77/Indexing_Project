@@ -137,6 +137,46 @@ void insert_first_fit(vector<int> &vec) {
     data_file.close();
 }
 
+pair<int, int> get_best_fit(int new_sz) {
+    vector<pair<int, int>> vec;
+    fstream index_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\index.dat",
+                       ios::in | ios::out | ios::binary};
+    while (!index_file.eof()) {
+        int offset, sz, deleted;
+        index_file.read(reinterpret_cast<char *>(&offset), sizeof(int));
+        index_file.read(reinterpret_cast<char *>(&sz), sizeof(int));
+        index_file.read(reinterpret_cast<char *>(&deleted), sizeof(int));
+        if (deleted && new_sz <= sz)
+            vec.push_back({offset, sz});
+    }
+
+    index_file.close();
+    sort(vec.begin(), vec.end());
+    if (vec.size())
+        return vec[0];
+    return {-1, -1};
+}
+
+pair<int, int> get_worst_fit(int new_sz) {
+    vector<pair<int, int>> vec;
+    fstream index_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\index.dat",
+                       ios::in | ios::out | ios::binary};
+    while (!index_file.eof()) {
+        int offset, sz, deleted;
+        index_file.read(reinterpret_cast<char *>(&offset), sizeof(int));
+        index_file.read(reinterpret_cast<char *>(&sz), sizeof(int));
+        index_file.read(reinterpret_cast<char *>(&deleted), sizeof(int));
+        if (deleted && new_sz <= sz)
+            vec.push_back({offset, sz});
+    }
+
+    index_file.close();
+    sort(vec.begin(), vec.end());
+    int len = vec.size();
+    if (len)
+        return vec[len - 1];
+    return {-1, -1};
+}
 
 int main() {
 //    write_file();
