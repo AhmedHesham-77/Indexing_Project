@@ -87,8 +87,32 @@ void row_delete(int idx) {
     index_file.close();
 }
 
+int get_first_fit(int new_sz) {
+    fstream index_file{"D:\\University\\File Structure\\2024\\SL\\Indexing\\index.dat",
+                       ios::in | ios::out | ios::binary};
+
+    int offset, sz, deleted, idx = 0, replace = 0;
+    while (!index_file.eof()) {
+        idx++;
+        index_file.read(reinterpret_cast<char *>(&offset), sizeof(int));
+        index_file.read(reinterpret_cast<char *>(&sz), sizeof(int));
+        index_file.read(reinterpret_cast<char *>(&deleted), sizeof(int));
+
+        if (deleted && new_sz <= sz) {
+            replace = 1, deleted = 0;
+            index_file.seekp((idx - 1) * (3 * sizeof(int)) + 1 * sizeof(int));
+            index_file.write(reinterpret_cast<const char *>(&new_sz), sizeof(int));
+            index_file.write(reinterpret_cast<const char *>(&deleted), sizeof(int));
+            break;
+        }
+    }
+    return (replace) ? offset : offset + sz;
+}
+
+
 int main() {
 //    write_file();
 //    read_data();
 //    row_delete(3);
+//    cout <<    get_first_fit(1);
 }
